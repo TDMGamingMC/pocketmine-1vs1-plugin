@@ -85,10 +85,6 @@ class Arena{
 		$player1->teleport($pos_player1, 90, 0);
 		$player2->teleport($pos_player2, -90, 0);
 		
-		// Give kit
-		foreach ($this->players as $player){
-			$this->giveKit($player);
-		}
 		
 		// Fix start time
 		$this->startTime = new DateTime('now');
@@ -124,27 +120,6 @@ class Arena{
 		Server::getInstance()->getScheduler()->cancelTask($this->countdownTaskHandler->getTaskId());
 	}
 	
-	private function giveKit(Player $player){
-		// Clear inventory
-		$player->getInventory()->clearAll();
-		
-		// Give sword, food and armor
-		$player->getInventory()->addItem(Item::get(ITEM::IRON_SWORD));
-		$player->getInventory()->addItem(Item::get(ITEM::BREAD));
-		$player->getInventory()->setItemInHand(Item::get(ITEM::IRON_SWORD), $player);
-		
-		// Pur the armor on the player
-		$player->getInventory()->setHelmet(Item::get(302, 0, 1));
-		$player->getInventory()->setChestplate(Item::get(303, 0, 1));
-		$player->getInventory()->setLeggings(Item::get(304, 0, 1));
-		$player->getInventory()->setBoots(Item::get(305, 0, 1));
-		$player->getInventory()->sendArmorContents($player);
-		
-		// Set his life to 20
-		$player->setHealth(20);
-		$player->removeAllEffects();
-
-   }
    
    /**
     * When a player was killed
